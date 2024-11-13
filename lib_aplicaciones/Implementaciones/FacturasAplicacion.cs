@@ -3,14 +3,13 @@ using lib_aplicaciones.Interfaces;
 using lib_repositorios.Interfaces;
 using System.Linq.Expressions;
 
-
 namespace lib_aplicaciones.Implementaciones
 {
-    public class ClientesAplicacion : IClientesAplicacion
+    public class FacturasAplicacion : IFacturasAplicacion
     {
-        private IClientesRepositorio? iRepositorio = null;
+        private IFacturasRepositorio? iRepositorio = null;
 
-        public ClientesAplicacion(IClientesRepositorio iRepositorio)
+        public FacturasAplicacion(IFacturasRepositorio iRepositorio)
         {
             this.iRepositorio = iRepositorio;
         }
@@ -20,56 +19,63 @@ namespace lib_aplicaciones.Implementaciones
             this.iRepositorio!.Configurar(string_conexion);
         }
 
-        public Clientes Borrar(Clientes entidad)
+        public Facturas Borrar(Facturas entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente == 0)
+            if (entidad.IDFactura == 0)
                 throw new Exception("lbNoSeGuardo");
 
             entidad = iRepositorio!.Borrar(entidad);
             return entidad;
         }
 
-        public Clientes Guardar(Clientes entidad)
+        public Facturas Guardar(Facturas entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente != 0)
+            if (entidad.IDFactura != 0)
                 throw new Exception("lbYaSeGuardo");
 
             entidad = iRepositorio!.Guardar(entidad);
             return entidad;
         }
 
-        public List<Clientes> Listar()
+        public List<Facturas> Listar()
         {
             return iRepositorio!.Listar();
         }
 
-        public List<Clientes> Buscar(Clientes entidad, string tipo)
+        public List<Facturas> Buscar(Facturas entidad, string tipo)
         {
-            Expression<Func<Clientes, bool>>? condiciones = null;
+            Expression<Func<Facturas, bool>>? condiciones = null;
             switch (tipo.ToUpper())
             {
-                case "NOMBRE": condiciones = x => x.Nombre!.Contains(entidad.Nombre!); break;
-                case "DIRECCION": condiciones = x => x.Direccion!.Contains(entidad.Direccion!); break;
-                case "COMPLEJA": condiciones = 
-                        x => x.Nombre!.Contains(entidad.Nombre!) ||
-                             x.Direccion!.Contains(entidad.Direccion!); break;
-                default: condiciones = x => x.IdCliente == entidad.IdCliente; break;
+                case "IDFACTURA":
+                    condiciones = x => x.IDFactura == entidad.IDFactura;
+                    break;
+                case "CODIGOFACTURA":
+                    condiciones = x => x.CodigoFactura!.Contains(entidad.CodigoFactura!);
+                    break;
+                case "COMPLEJA":
+                    condiciones = x => x.CodigoFactura!.Contains(entidad.CodigoFactura!) ||
+                                        x.IDFactura == entidad.IDFactura;
+                    break;
+                default:
+                    condiciones = x => x.IDFactura == entidad.IDFactura;
+                    break;
             }
             return this.iRepositorio!.Buscar(condiciones);
         }
 
-        public Clientes Modificar(Clientes entidad)
+        public Facturas Modificar(Facturas entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente == 0)
+            if (entidad.IDFactura == 0)
                 throw new Exception("lbNoSeGuardo");
 
             entidad = iRepositorio!.Modificar(entidad);
@@ -77,3 +83,24 @@ namespace lib_aplicaciones.Implementaciones
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,13 +19,15 @@ namespace lib_entidades
 
         public bool Validar()
         {
-            if (string.IsNullOrEmpty(Nombre) ||
-                string.IsNullOrEmpty(Direccion) ||
-                string.IsNullOrEmpty(Telefono) ||
-                Fecha == null)
+            if (string.IsNullOrEmpty(Nombre))
+                return false;
+            if (string.IsNullOrEmpty(Direccion))
+                return false;
+            if (Fecha == null )
+                return false;  
+            if (string.IsNullOrEmpty(Telefono) )
+                return false;
 
-            
-                            return false;
             return true;
         }
     }

@@ -7,6 +7,13 @@ namespace lib_entidades
     {
         [Key] public int ID_Pago { get; set; }
         public string? Tipo_Pago { get; set; }
+        public bool Validar()
+        {
+            if (string.IsNullOrEmpty(Tipo_Pago))
+                return false;
 
+            return true;
+        }
     }
+
 }

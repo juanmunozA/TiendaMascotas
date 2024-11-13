@@ -3,14 +3,13 @@ using lib_aplicaciones.Interfaces;
 using lib_repositorios.Interfaces;
 using System.Linq.Expressions;
 
-
 namespace lib_aplicaciones.Implementaciones
 {
-    public class ClientesAplicacion : IClientesAplicacion
+    public class MascotasAplicacion : IMascotasAplicacion
     {
-        private IClientesRepositorio? iRepositorio = null;
+        private IMascotasRepositorio? iRepositorio = null;
 
-        public ClientesAplicacion(IClientesRepositorio iRepositorio)
+        public MascotasAplicacion(IMascotasRepositorio iRepositorio)
         {
             this.iRepositorio = iRepositorio;
         }
@@ -20,56 +19,67 @@ namespace lib_aplicaciones.Implementaciones
             this.iRepositorio!.Configurar(string_conexion);
         }
 
-        public Clientes Borrar(Clientes entidad)
+        public Mascotas Borrar(Mascotas entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente == 0)
+            if (entidad.ID_Mascota == 0)  // Corregido a ID_Mascota
                 throw new Exception("lbNoSeGuardo");
 
             entidad = iRepositorio!.Borrar(entidad);
             return entidad;
         }
 
-        public Clientes Guardar(Clientes entidad)
+        public Mascotas Guardar(Mascotas entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente != 0)
+            if (entidad.ID_Mascota != 0)  // Corregido a ID_Mascota
                 throw new Exception("lbYaSeGuardo");
 
             entidad = iRepositorio!.Guardar(entidad);
             return entidad;
         }
 
-        public List<Clientes> Listar()
+        public List<Mascotas> Listar()
         {
             return iRepositorio!.Listar();
         }
 
-        public List<Clientes> Buscar(Clientes entidad, string tipo)
+        public List<Mascotas> Buscar(Mascotas entidad, string tipo)
         {
-            Expression<Func<Clientes, bool>>? condiciones = null;
+            Expression<Func<Mascotas, bool>>? condiciones = null;
             switch (tipo.ToUpper())
             {
-                case "NOMBRE": condiciones = x => x.Nombre!.Contains(entidad.Nombre!); break;
-                case "DIRECCION": condiciones = x => x.Direccion!.Contains(entidad.Direccion!); break;
-                case "COMPLEJA": condiciones = 
-                        x => x.Nombre!.Contains(entidad.Nombre!) ||
-                             x.Direccion!.Contains(entidad.Direccion!); break;
-                default: condiciones = x => x.IdCliente == entidad.IdCliente; break;
+                case "NOMBRE":
+                    condiciones = x => x.Nombre!.Contains(entidad.Nombre!);
+                    break;
+
+                case "GENERO":
+                    condiciones = x => x.Genero!.Contains(entidad.Genero!);
+                    break;
+
+                case "COMPLEJA":
+                    condiciones = x =>
+                        x.Nombre!.Contains(entidad.Nombre!) ||
+                        x.Genero!.Contains(entidad.Genero!);
+                    break;
+
+                default:
+                    condiciones = x => x.Dueño == entidad.Dueño;
+                    break;
             }
             return this.iRepositorio!.Buscar(condiciones);
         }
 
-        public Clientes Modificar(Clientes entidad)
+        public Mascotas Modificar(Mascotas entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente == 0)
+            if (entidad.ID_Mascota == 0)  // Corregido a ID_Mascota
                 throw new Exception("lbNoSeGuardo");
 
             entidad = iRepositorio!.Modificar(entidad);

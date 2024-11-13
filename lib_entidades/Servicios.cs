@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using lib_entidades;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lib_entidades
@@ -11,5 +12,17 @@ namespace lib_entidades
         public int Mascota { get; set; }
 
         [NotMapped] public Mascotas? _Especie { get; set; }
+
+
+
+        public bool Validar()
+        {   
+            if (Precio < 0)
+                return false;
+            if (Mascota <= 0)
+                return false; 
+
+            return true;
+        }
     }
 }

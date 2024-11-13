@@ -12,5 +12,22 @@ namespace lib_entidades
         public string? Edad { get; set; }
         public int Dueño { get; set; }
         [NotMapped] public Clientes? _Dueño { get; set; }
+
+
+        public bool Validar()
+        {
+            if (string.IsNullOrEmpty(Cod_Mascota))
+                return false;
+            if (string.IsNullOrEmpty(Nombre))
+                return false;
+            if (string.IsNullOrEmpty(Genero) || (Genero != "Macho" && Genero != "Hembra"))
+                return false; 
+            if (string.IsNullOrEmpty(Edad))
+                return false;
+            if (Dueño <= 0)
+                return false; 
+
+            return true;
+        }
     }
 }

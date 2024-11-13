@@ -3,14 +3,13 @@ using lib_aplicaciones.Interfaces;
 using lib_repositorios.Interfaces;
 using System.Linq.Expressions;
 
-
 namespace lib_aplicaciones.Implementaciones
 {
-    public class ClientesAplicacion : IClientesAplicacion
+    public class TiposServiciosAplicacion : ITiposServiciosAplicacion
     {
-        private IClientesRepositorio? iRepositorio = null;
+        private ITiposServiciosRepositorio? iRepositorio = null;
 
-        public ClientesAplicacion(IClientesRepositorio iRepositorio)
+        public TiposServiciosAplicacion(ITiposServiciosRepositorio iRepositorio)
         {
             this.iRepositorio = iRepositorio;
         }
@@ -20,56 +19,63 @@ namespace lib_aplicaciones.Implementaciones
             this.iRepositorio!.Configurar(string_conexion);
         }
 
-        public Clientes Borrar(Clientes entidad)
+        public TiposServicios Borrar(TiposServicios entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente == 0)
+            if (entidad.IDTipoServicio == 0)
                 throw new Exception("lbNoSeGuardo");
 
             entidad = iRepositorio!.Borrar(entidad);
             return entidad;
         }
 
-        public Clientes Guardar(Clientes entidad)
+        public TiposServicios Guardar(TiposServicios entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente != 0)
+            if (entidad.IDTipoServicio != 0)
                 throw new Exception("lbYaSeGuardo");
 
             entidad = iRepositorio!.Guardar(entidad);
             return entidad;
         }
 
-        public List<Clientes> Listar()
+        public List<TiposServicios> Listar()
         {
             return iRepositorio!.Listar();
         }
 
-        public List<Clientes> Buscar(Clientes entidad, string tipo)
+        public List<TiposServicios> Buscar(TiposServicios entidad, string tipo)
         {
-            Expression<Func<Clientes, bool>>? condiciones = null;
+            Expression<Func<TiposServicios, bool>>? condiciones = null;
             switch (tipo.ToUpper())
             {
-                case "NOMBRE": condiciones = x => x.Nombre!.Contains(entidad.Nombre!); break;
-                case "DIRECCION": condiciones = x => x.Direccion!.Contains(entidad.Direccion!); break;
-                case "COMPLEJA": condiciones = 
-                        x => x.Nombre!.Contains(entidad.Nombre!) ||
-                             x.Direccion!.Contains(entidad.Direccion!); break;
-                default: condiciones = x => x.IdCliente == entidad.IdCliente; break;
+                case "IDTIPOSERVICIO":
+                    condiciones = x => x.IDTipoServicio == entidad.IDTipoServicio;
+                    break;
+                case "TIPOSERVICIO":
+                    condiciones = x => x.TipoServicio!.Contains(entidad.TipoServicio!);
+                    break;
+                case "COMPLEJA":
+                    condiciones = x => x.IDTipoServicio == entidad.IDTipoServicio ||
+                                        x.TipoServicio!.Contains(entidad.TipoServicio!);
+                    break;
+                default:
+                    condiciones = x => x.IDTipoServicio == entidad.IDTipoServicio;
+                    break;
             }
             return this.iRepositorio!.Buscar(condiciones);
         }
 
-        public Clientes Modificar(Clientes entidad)
+        public TiposServicios Modificar(TiposServicios entidad)
         {
             if (entidad == null || !entidad.Validar())
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.IdCliente == 0)
+            if (entidad.IDTipoServicio == 0)
                 throw new Exception("lbNoSeGuardo");
 
             entidad = iRepositorio!.Modificar(entidad);

@@ -2,7 +2,7 @@
 
 namespace lib_aplicaciones.Interfaces
 {
-    public interface IMetodo_pagoAplicacion
+    public interface IMetodosPagosAplicacion
     {
         void Configurar(string string_conexion);
         List<MetodosPagos> Buscar(MetodosPagos entidad, string tipo);
