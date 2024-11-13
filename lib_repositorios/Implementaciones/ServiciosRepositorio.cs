@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class ClientesRepositorio : IClientesRepositorio
+    public class ServiciosRepositorio : IServiciosRepositorio
     {
         private Conexion? conexion = null;
 
-        public ClientesRepositorio(Conexion conexion)
+        public ServiciosRepositorio(Conexion conexion)
         {
             this.conexion = conexion;
         }
@@ -18,31 +18,31 @@ namespace lib_repositorios.Implementaciones
             this.conexion!.StringConnection = string_conexion;
         }
 
-        public List<Clientes> Listar()
+        public List<Servicios> Listar()
         {
-            return conexion!.Listar<Clientes>();
+            return conexion!.Listar<Servicios>();
         }
 
-        public List<Clientes> Buscar(Expression<Func<Clientes, bool>> condiciones)
+        public List<Servicios> Buscar(Expression<Func<Servicios, bool>> condiciones)
         {
             return conexion!.Buscar(condiciones);
         }
 
-        public Clientes Guardar(Clientes entidad)
+        public Servicios Guardar(Servicios entidad)
         {
             conexion!.Guardar(entidad);
             conexion!.GuardarCambios();
             return entidad;
         }
 
-        public Clientes Modificar(Clientes entidad)
+        public Servicios Modificar(Servicios entidad)
         {
             conexion!.Modificar(entidad);
             conexion!.GuardarCambios();
             return entidad;
         }
 
-        public Clientes Borrar(Clientes entidad)
+        public Servicios Borrar(Servicios entidad)
         {
             conexion!.Borrar(entidad);
             conexion!.GuardarCambios();

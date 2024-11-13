@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lib_entidades
 {
-    public class Tipos_mascotas
+    public class TiposMascotas
     {
         [Key] public int ID_TipoMascota { get; set; }
         public string? TipoDeMascota { get; set; }

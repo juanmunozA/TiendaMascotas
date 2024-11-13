@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lib_entidades
 {
-    public class Clientes
+    public class TiposServicios
+
     {
         [Key] public int ID_TipoServicio { get; set; }
         public string? Tipo_Servicio { get; set; }

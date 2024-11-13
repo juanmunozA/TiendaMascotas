@@ -17,7 +17,7 @@ namespace lib_entidades
         [NotMapped] public Clientes? _Cliente { get; set; }
         [NotMapped] public Mascotas? _Mascota { get; set; }
         [NotMapped] public Servicios? _Servicio { get; set; }
-        [NotMapped] public Metodo_pago? _Pago { get; set; }
+        [NotMapped] public MetodosPagos? _Pago { get; set; }
 
     }
 }

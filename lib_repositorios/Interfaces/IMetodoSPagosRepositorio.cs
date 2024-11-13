@@ -1,12 +1,13 @@
 ﻿using lib_entidades;
+    using System.Linq.Expressions;
 
-namespace lib_aplicaciones.Interfaces
+namespace lib_repositorios.Interfaces
 {
-    public interface IMetodo_pagoAplicacion
+    public interface IMetodosPagosRepositorio
     {
         void Configurar(string string_conexion);
-        List<MetodosPagos> Buscar(MetodosPagos entidad, string tipo);
         List<MetodosPagos> Listar();
+        List<MetodosPagos> Buscar(Expression<Func<MetodosPagos, bool>> condiciones);
         MetodosPagos Guardar(MetodosPagos entidad);
         MetodosPagos Modificar(MetodosPagos entidad);
         MetodosPagos Borrar(MetodosPagos entidad);
